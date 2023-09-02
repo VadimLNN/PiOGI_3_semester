@@ -7,7 +7,22 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Canvas x:Name="scene" Margin="0,0,210,10"/>
-
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FF7417D9" Offset="0.1"/>
+                <GradientStop Color="#FFFFFA2B" Offset="0.9"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <Canvas x:Name="scene" Margin="10,10,210,10" Background="#FFCFB6EE"/>
+        <Button x:Name="DrawPoint" Content="Draw Point" HorizontalAlignment="Left" Margin="628,97,0,0" VerticalAlignment="Top" Height="28" Width="110" Click="DrawPoint_Click"/>
+        <TextBox x:Name="x_coordinate" HorizontalAlignment="Left" Margin="628,22,0,0" TextWrapping="Wrap" Text="x" VerticalAlignment="Top" Width="133" Height="25"/>
+        <TextBox x:Name="y_coordinate" HorizontalAlignment="Left" Margin="628,57,0,0" TextWrapping="Wrap" Text="y" VerticalAlignment="Top" Width="133" Height="25"/>
+        <ScrollBar x:Name="vert_bar" HorizontalAlignment="Left" Margin="770,22,0,0" VerticalAlignment="Top" Height="135" Maximum="388" Minimum="1" ValueChanged="vert_bar_ValueChanged"/>
+        <ScrollBar x:Name="hor_bar" HorizontalAlignment="Left" Margin="628,140,0,0" VerticalAlignment="Top" Height="16.4" Maximum="560" Minimum="1" Orientation="Horizontal" Width="135" ValueChanged="hor_bar_ValueChanged"/>
+        <Button x:Name="DrawTriangle1" Content="Draw Triangle" HorizontalAlignment="Left" Margin="628,189,0,0" VerticalAlignment="Top" Width="110" Height="28" Click="DrawTriangle_Click"/>
+        <Label Content="Perimetr:" HorizontalAlignment="Left" Margin="10,369,0,0" VerticalAlignment="Top" Height="26" Width="57"/>
+        <Label Content="Square:" HorizontalAlignment="Left" Margin="10,348,0,0" VerticalAlignment="Top" Height="26" Width="57"/>
+        <Label x:Name="pr_res" Content="" HorizontalAlignment="Left" Margin="60,369,0,0" VerticalAlignment="Top" Height="26" Width="156"/>
+        <Label x:Name="sq_res" Content="" HorizontalAlignment="Left" Margin="53,348,0,0" VerticalAlignment="Top" Height="26" Width="163"/>
     </Grid>
 </Window>
