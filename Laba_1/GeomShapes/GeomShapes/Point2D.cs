@@ -6,15 +6,20 @@ using System.Threading.Tasks;
 
 namespace GeomShapes
 {
-    internal class Point2D
+    public class Point2D
     {
         private double x;
         private double y;
 
-        public Point2D(double acquired_x, double acquired_y)
+        public Point2D()
         {
-            x = acquired_x;
-            y = acquired_y;
+            x = 0;
+            y = 0;
+        }
+        public Point2D(double X, double Y)
+        {
+            x = X;
+            y = Y;
         }
 
         public double getX()
@@ -26,15 +31,25 @@ namespace GeomShapes
         {
             return y;
         }
-    
+
+        public void setX(double X)
+        {
+            x = X;
+        }
+
+        public void setY(double Y)
+        {
+            y = Y;
+        }
+
         public void shiftX(double shift)
         {
-
+            x += shift;
         }
 
         public void shiftY(double shift)
         {
-
+            y += shift;
         }
 
         public double GetDistance()
