@@ -22,41 +22,27 @@ namespace GeomShapes
             y = Y;
         }
 
-        public double getX()
+        public Point2D(Point2D point)
         {
-            return x;
+            x = point.x;
+            y = point.y;
         }
 
-        public double getY()
-        {
-            return y;
-        }
+        public double getX() { return x; }
 
-        public void setX(double X)
-        {
-            x = X;
-        }
+        public double getY() { return y; }
 
-        public void setY(double Y)
-        {
-            y = Y;
-        }
+        public void setX(double X) { x = X; }
 
-        public void shiftX(double shift)
-        {
-            x += shift;
-        }
+        public void setY(double Y) { y = Y; }
 
-        public void shiftY(double shift)
-        {
-            y += shift;
-        }
+        public void shiftX(double shift) { x += shift; }
 
-        public double GetDistance()
-        {
-            double res = 0;
+        public void shiftY(double shift) { y += shift; }
 
-            return res;
+        public double getDistance(Point2D next)
+        {
+             return Math.Sqrt(Math.Pow(next.x - x, 2) + Math.Pow(next.y - y, 2));
         }
     }
 }
