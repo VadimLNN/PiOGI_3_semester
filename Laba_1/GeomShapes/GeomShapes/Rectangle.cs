@@ -4,6 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/*
+    3) Класс «прямоугольник». Класс должен содержать поля для хранения вершин прямоугольника         Y
+    и методы, реализующие следующие операции:   
+         вычисление площади и периметра;                                                           (Y)    
+         сдвиг прямоугольника по осям X и Y на заданное расстояние;                                (Y) 
+*/
+
 namespace GeomShapes
 {
     internal class Rectangle
@@ -19,14 +26,21 @@ namespace GeomShapes
             c = new Point2D();
             d = new Point2D();
         }
-
         public Rectangle(Point2D A, Point2D B, Point2D C, Point2D D)
         {
             a = new Point2D(A);
             b = new Point2D(B);
             c = new Point2D(C);
-            в = new Point2D(D);
+            d = new Point2D(D);
         }
+        public Rectangle(Rectangle r)
+        {
+            a = new Point2D(r.getA());
+            b = new Point2D(r.getB());
+            c = new Point2D(r.getC());
+            d = new Point2D(r.getD());
+        }
+
 
         public Point2D getA() { return a; }
         public Point2D getB() { return b; }
@@ -69,14 +83,13 @@ namespace GeomShapes
             d.shiftY(value);
         }
 
-        public double perimeter()
+        public double getPerimeter()
         {
             return a.getDistance(b) + b.getDistance(c) + c.getDistance(d) + d.getDistance(a);
         }
-
-        public double square()
+        public double getArea()
         {
-            return 1;
+            return a.getDistance(b) * b.getDistance(c);
         }
     }
 }
