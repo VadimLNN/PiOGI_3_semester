@@ -4,6 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/*
+    2) Класс «треугольник». Класс должен содержать поля для хранения вершин треугольника и           Y
+    методы, реализующие следующие операции:
+         вычисление площади и периметра;                                                           (Y)
+         сдвиг треугольника по осям X и Y на заданное расстояние;                                  (Y) 
+*/
+
 namespace GeomShapes
 {
     internal class Triangle
@@ -18,14 +25,20 @@ namespace GeomShapes
             b = new Point2D();
             c = new Point2D();
         }
-
         public Triangle(Point2D A, Point2D B, Point2D C)
         {
             a = new Point2D(A);
             b = new Point2D(B);
             c = new Point2D(C);
         }
-    
+        public Triangle(Triangle t)
+        {
+            a = new Point2D(t.getA());
+            b = new Point2D(t.getB());
+            c = new Point2D(t.getC());
+        }
+
+
         public Point2D getA() { return a; }
         public Point2D getB() { return b; }
         public Point2D getC() { return c; }
@@ -49,7 +62,6 @@ namespace GeomShapes
 
             c.shiftX(value);
         }
-
         public void shiftY(double value)
         {
             a.shiftY(value);
@@ -57,12 +69,11 @@ namespace GeomShapes
             c.shiftY(value);
         }
 
-        public double perimeter () 
+        public double getPerimeter () 
         {
             return a.getDistance(b) + b.getDistance(c) + c.getDistance(a);
         }
-
-        public double square()
+        public double getArea()
         {
             // полупериметр 
             double pp = (a.getDistance(b) + b.getDistance(c) + c.getDistance(a)) / 2;
