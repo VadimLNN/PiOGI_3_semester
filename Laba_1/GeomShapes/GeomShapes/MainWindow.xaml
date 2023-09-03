@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GeomShapes"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="565" Width="800">
     <Grid>
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -13,16 +13,20 @@
                 <GradientStop Color="#FFFFFA2B" Offset="0.9"/>
             </LinearGradientBrush>
         </Grid.Background>
-        <Canvas x:Name="scene" Margin="10,10,210,10" Background="#FFCFB6EE"/>
-        <Button x:Name="DrawPoint" Content="Draw Point" HorizontalAlignment="Left" Margin="628,97,0,0" VerticalAlignment="Top" Height="28" Width="110" Click="DrawPoint_Click"/>
-        <TextBox x:Name="x_coordinate" HorizontalAlignment="Left" Margin="628,22,0,0" TextWrapping="Wrap" Text="x" VerticalAlignment="Top" Width="133" Height="25"/>
-        <TextBox x:Name="y_coordinate" HorizontalAlignment="Left" Margin="628,57,0,0" TextWrapping="Wrap" Text="y" VerticalAlignment="Top" Width="133" Height="25"/>
-        <ScrollBar x:Name="vert_bar" HorizontalAlignment="Left" Margin="770,22,0,0" VerticalAlignment="Top" Height="135" Maximum="388" Minimum="1" ValueChanged="vert_bar_ValueChanged"/>
-        <ScrollBar x:Name="hor_bar" HorizontalAlignment="Left" Margin="628,140,0,0" VerticalAlignment="Top" Height="16.4" Maximum="560" Minimum="1" Orientation="Horizontal" Width="135" ValueChanged="hor_bar_ValueChanged"/>
-        <Button x:Name="DrawTriangle1" Content="Draw Triangle" HorizontalAlignment="Left" Margin="628,189,0,0" VerticalAlignment="Top" Width="110" Height="28" Click="DrawTriangle_Click"/>
-        <Label Content="Perimetr:" HorizontalAlignment="Left" Margin="10,369,0,0" VerticalAlignment="Top" Height="26" Width="57"/>
-        <Label Content="Square:" HorizontalAlignment="Left" Margin="10,348,0,0" VerticalAlignment="Top" Height="26" Width="57"/>
-        <Label x:Name="pr_res" Content="" HorizontalAlignment="Left" Margin="60,369,0,0" VerticalAlignment="Top" Height="26" Width="156"/>
-        <Label x:Name="sq_res" Content="" HorizontalAlignment="Left" Margin="53,348,0,0" VerticalAlignment="Top" Height="26" Width="163"/>
+        <Canvas x:Name="scene" Margin="10,161,194,10" Background="#FFCFB6EE"/>
+        <Button x:Name="DrawPoint" Content="Draw Point" HorizontalAlignment="Left" Margin="628,161,0,0" VerticalAlignment="Top" Height="28" Width="110" Click="DrawPoint_Click"/>
+        <TextBox x:Name="field_1" HorizontalAlignment="Left" Margin="628,350,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="110" Height="25"/>
+        <TextBox x:Name="field_2" HorizontalAlignment="Left" Margin="628,382,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="110" Height="25"/>
+        <ScrollBar x:Name="vert_bar" HorizontalAlignment="Left" Margin="38,111,0,0" VerticalAlignment="Top" Height="14" Maximum="388" Minimum="1" ValueChanged="vert_bar_ValueChanged" Orientation="Horizontal" Width="350"/>
+        <ScrollBar x:Name="hor_bar" HorizontalAlignment="Left" Margin="38,81,0,0" VerticalAlignment="Top" Height="16.4" Maximum="560" Minimum="1" Orientation="Horizontal" Width="350" ValueChanged="hor_bar_ValueChanged"/>
+        <Button x:Name="DrawTriangle1" Content="Draw Triangle" HorizontalAlignment="Left" Margin="628,219,0,0" VerticalAlignment="Top" Width="110" Height="28" Click="DrawTriangle_Click"/>
+        <Label Content="Perimetr:" HorizontalAlignment="Left" Margin="14,486,0,0" VerticalAlignment="Top" Height="26" Width="57"/>
+        <Label Content="Area:" HorizontalAlignment="Left" Margin="14,465,0,0" VerticalAlignment="Top" Height="26" Width="57"/>
+        <Label x:Name="pr_res" Content="" HorizontalAlignment="Left" Margin="64,486,0,0" VerticalAlignment="Top" Height="26" Width="156"/>
+        <Label x:Name="sq_res" Content="" HorizontalAlignment="Left" Margin="57,465,0,0" VerticalAlignment="Top" Height="26" Width="163"/>
+        <Button x:Name="DrawRectangle" Content="Draw Rectangle" HorizontalAlignment="Left" Margin="628,275,0,0" VerticalAlignment="Top" Width="110" Height="28" Click="DrawRectangle_Click"/>
+        <Label Content="Laba 1" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Background="Transparent" Foreground="#FFE4CDFF" Height="60" Width="132" FontSize="36"/>
+        <Label Content="X:" HorizontalAlignment="Left" Margin="10,73,0,0" VerticalAlignment="Top" Background="Transparent" Foreground="#FFE4CDFF" Height="30" Width="40" FontSize="18"/>
+        <Label Content="Y:" HorizontalAlignment="Left" Margin="10,103,0,0" VerticalAlignment="Top" Background="Transparent" Foreground="#FFE4CDFF" Height="30" Width="40" FontSize="18"/>
     </Grid>
 </Window>
