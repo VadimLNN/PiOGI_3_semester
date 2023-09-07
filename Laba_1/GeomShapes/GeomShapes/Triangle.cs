@@ -75,9 +75,9 @@ namespace GeomShapes
         }
         public double getArea()
         {
-            // полупериметр 
-            double pp = (a.getDistance(b) + b.getDistance(c) + c.getDistance(a)) / 2;
-            return Math.Sqrt(pp * (pp - a.getDistance(b)) * (pp - b.getDistance(c)) * (pp - c.getDistance(a)));
+            // semi-perimeter 
+            double sp = (a.getDistance(b) + b.getDistance(c) + c.getDistance(a)) / 2;
+            return Math.Sqrt(sp * (sp - a.getDistance(b)) * (sp - b.getDistance(c)) * (sp - c.getDistance(a)));
         }
     }
 }
