@@ -41,7 +41,6 @@ namespace GeomShapes
             d = new Point2D(r.getD());
         }
 
-
         public Point2D getA() { return a; }
         public Point2D getB() { return b; }
         public Point2D getC() { return c; }
