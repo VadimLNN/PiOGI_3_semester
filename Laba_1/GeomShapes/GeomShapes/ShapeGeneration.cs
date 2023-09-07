@@ -21,7 +21,7 @@ namespace GeomShapes
             Random rng = new Random();
             return new Point2D(rng.NextDouble() * 568, rng.NextDouble() * 343);
         }
-        public static Point2D genRandPoint2D(double x, double y)
+        public static Point2D genPoint2D(double x, double y)
         {
             return new Point2D(x, y);
         }
