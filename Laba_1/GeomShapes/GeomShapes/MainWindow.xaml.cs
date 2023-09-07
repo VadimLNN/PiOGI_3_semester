@@ -35,8 +35,8 @@ using System.Windows.Shapes;
     создания геометрических фигур:
          создание произвольной («рандомной») точки;                                                (Y)
          создание произвольного треугольника;                                                      (Y)
-         создание произвольного прямоугольника;                                                    (N)
-         создание прямоугольника заданного размера.                                                (N)
+         создание произвольного прямоугольника;                                                    (Y)
+         создание прямоугольника заданного размера.                                                (Y)
 */
 namespace GeomShapes
 {
@@ -70,17 +70,12 @@ namespace GeomShapes
         private void DrawPoint_Click(object sender, RoutedEventArgs e)
         {
             if (field_1.Text == "" && field_2.Text == "")
-            {
                 p = ShapeGeneration.genRandPoint2D();
-            }
             else
-            { 
-                p.setX(double.Parse(field_1.Text));
-                p.setY(double.Parse(field_2.Text));
-            }
+                p = ShapeGeneration.genPoint2D(double.Parse(field_1.Text), double.Parse(field_2.Text));
 
-            vert_bar.Value = p.getY();
             hor_bar.Value = p.getX();
+            vert_bar.Value = p.getY();
 
             scene.Children.Clear();
 
@@ -107,6 +102,9 @@ namespace GeomShapes
         {
             tr = ShapeGeneration.genRandTriangle();
 
+            hor_bar.Value = tr.getA().getX();
+            vert_bar.Value = tr.getA().getY();
+
             scene.Children.Clear();
 
             drawTriangle(tr);
@@ -124,7 +122,13 @@ namespace GeomShapes
 
         private void DrawRectangle_Click(object sender, RoutedEventArgs e)
         {
-            rec = ShapeGeneration.genRandRectangle();
+            if (field_1.Text == "" && field_2.Text == "")
+                rec = ShapeGeneration.genRandRectangle();
+            else
+                rec = ShapeGeneration.genRectangle(double.Parse(field_1.Text), double.Parse(field_2.Text));
+
+            hor_bar.Value = rec.getA().getX();
+            vert_bar.Value = rec.getA().getY();
 
             scene.Children.Clear();
 
@@ -146,21 +150,19 @@ namespace GeomShapes
         {
             double value = e.NewValue - e.OldValue;
 
-            if (scene.Children.Capacity == 1)
+            if (scene.Children.Count == 1)
             {
                 scene.Children.Clear();
                 p.shiftY(value);
                 drawPoint(p);
             }
-            else if (scene.Children.Capacity == 3 && e.NewValue != tr.getA().getY() && e.NewValue != tr.getB().getY() &&
-                e.NewValue != tr.getC().getY())
-
+            else if (scene.Children.Count == 3)
             {
                 scene.Children.Clear();
                 tr.shiftY(value);
                 drawTriangle(tr);
             }
-            else if (scene.Children.Capacity == 4)
+            else if (scene.Children.Count == 4)
             {
                 scene.Children.Clear();
                 rec.shiftY(value);
@@ -173,28 +175,24 @@ namespace GeomShapes
         {
             double value = e.NewValue - e.OldValue;
 
-            if (scene.Children.Capacity == 1)
+            if (scene.Children.Count == 1)
             {
                 scene.Children.Clear();
                 p.shiftX(value);
                 drawPoint(p);
             }
-            else if (scene.Children.Capacity == 3)
+            else if (scene.Children.Count == 3)
             {
                 scene.Children.Clear();
                 tr.shiftX(value);
                 drawTriangle(tr);
             }
-            else if (scene.Children.Capacity == 4)
+            else if (scene.Children.Count == 4)
             {
                 scene.Children.Clear();
                 rec.shiftX(value);
                 drawRectangle(rec);
             }
         }
-
-        
-            
-        
     }
 }
