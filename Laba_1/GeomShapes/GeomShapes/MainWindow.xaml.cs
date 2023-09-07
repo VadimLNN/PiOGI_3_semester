@@ -31,10 +31,10 @@ using System.Windows.Shapes;
          вычисление площади и периметра;                                                           (Y)    
          сдвиг прямоугольника по осям X и Y на заданное расстояние;                                (Y)
     
-    4) Класс для генерации геометрических фигур. Класс должен содержать статические методы           N
+    4) Класс для генерации геометрических фигур. Класс должен содержать статические методы           Y
     создания геометрических фигур:
-         создание произвольной («рандомной») точки;                                                (N)
-         создание произвольного треугольника;                                                      (N)
+         создание произвольной («рандомной») точки;                                                (Y)
+         создание произвольного треугольника;                                                      (Y)
          создание произвольного прямоугольника;                                                    (N)
          создание прямоугольника заданного размера.                                                (N)
 */
@@ -42,8 +42,6 @@ namespace GeomShapes
 {
     public partial class MainWindow : Window
     {
-
-        Random rng = new Random();
         Point2D p = new Point2D();
         Triangle tr = new Triangle();
         Rectangle rec = new Rectangle();
@@ -73,15 +71,17 @@ namespace GeomShapes
         {
             if (field_1.Text == "" && field_2.Text == "")
             {
-                //ShapeGeneration.genRandPoint2D();
-                p.setX(rng.NextDouble() * 560);
-                p.setY(rng.NextDouble() * 388);
+                p = ShapeGeneration.genRandPoint2D();
             }
             else
             { 
                 p.setX(double.Parse(field_1.Text));
                 p.setY(double.Parse(field_2.Text));
             }
+
+            vert_bar.Value = p.getY();
+            hor_bar.Value = p.getX();
+
             scene.Children.Clear();
 
             drawPoint(p);
@@ -105,11 +105,7 @@ namespace GeomShapes
 
         private void DrawTriangle_Click(object sender, RoutedEventArgs e)
         {
-            Point2D a = new Point2D(rng.NextDouble() * 560, rng.NextDouble() * 388);
-            Point2D b = new Point2D(rng.NextDouble() * 560, rng.NextDouble() * 388);
-            Point2D c = new Point2D(rng.NextDouble() * 560, rng.NextDouble() * 388);
-
-            tr = new Triangle(a, b, c);
+            tr = ShapeGeneration.genRandTriangle();
 
             scene.Children.Clear();
 
@@ -128,12 +124,7 @@ namespace GeomShapes
 
         private void DrawRectangle_Click(object sender, RoutedEventArgs e)
         {
-            Point2D a = new Point2D(rng.NextDouble() * 560, rng.NextDouble() * 388);
-            Point2D b = new Point2D(rng.NextDouble() * 560, rng.NextDouble() * 388);
-            Point2D c = new Point2D(rng.NextDouble() * 560, rng.NextDouble() * 388);
-            Point2D d = new Point2D(rng.NextDouble() * 560, rng.NextDouble() * 388);
-
-            rec = new Rectangle(a, b, c, d);
+            rec = ShapeGeneration.genRandRectangle();
 
             scene.Children.Clear();
 
@@ -161,7 +152,9 @@ namespace GeomShapes
                 p.shiftY(value);
                 drawPoint(p);
             }
-            else if (scene.Children.Capacity == 3)
+            else if (scene.Children.Capacity == 3 && e.NewValue != tr.getA().getY() && e.NewValue != tr.getB().getY() &&
+                e.NewValue != tr.getC().getY())
+
             {
                 scene.Children.Clear();
                 tr.shiftY(value);
