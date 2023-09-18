@@ -105,5 +105,17 @@
   <ItemGroup>
     <Resource Include="Free-Download-HD-Wallpapers-World-Map-Desktop.jpg" />
   </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="imgs\car.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="imgs\human.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="imgs\mark.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
