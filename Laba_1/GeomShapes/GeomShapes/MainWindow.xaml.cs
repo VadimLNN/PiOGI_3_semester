@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -63,8 +64,6 @@ namespace GeomShapes
         public MainWindow()
         {
             InitializeComponent();
-
-
         }
 
         private void DrawPoint_Click(object sender, RoutedEventArgs e)
@@ -73,9 +72,6 @@ namespace GeomShapes
                 p = ShapeGeneration.genRandPoint2D();
             else
                 p = ShapeGeneration.genPoint2D(double.Parse(field_1.Text), double.Parse(field_2.Text));
-
-            hor_bar.Value = p.getX();
-            vert_bar.Value = p.getY();
 
             scene.Children.Clear();
 
@@ -102,9 +98,6 @@ namespace GeomShapes
         {
             tr = ShapeGeneration.genRandTriangle();
 
-            hor_bar.Value = tr.getA().getX();
-            vert_bar.Value = tr.getA().getY();
-
             scene.Children.Clear();
 
             drawTriangle(tr);
@@ -127,9 +120,6 @@ namespace GeomShapes
             else
                 rec = ShapeGeneration.genRectangle(double.Parse(field_1.Text), double.Parse(field_2.Text));
 
-            hor_bar.Value = rec.getA().getX();
-            vert_bar.Value = rec.getA().getY();
-
             scene.Children.Clear();
 
             drawRectangle(rec);
@@ -150,19 +140,24 @@ namespace GeomShapes
         {
             double value = e.NewValue - e.OldValue;
 
-            if (scene.Children.Count == 1)
+            if (scene.Children.Count == 1 && vert_coordinate_check(p, value))
             {
                 scene.Children.Clear();
                 p.shiftY(value);
                 drawPoint(p);
             }
-            else if (scene.Children.Count == 3)
+            else if (scene.Children.Count == 3 && vert_coordinate_check(tr.getA(), value)
+                                               && vert_coordinate_check(tr.getB(), value)
+                                               && vert_coordinate_check(tr.getC(), value))
             {
                 scene.Children.Clear();
                 tr.shiftY(value);
                 drawTriangle(tr);
             }
-            else if (scene.Children.Count == 4)
+            else if (scene.Children.Count == 4 && vert_coordinate_check(rec.getA(), value)
+                                               && vert_coordinate_check(rec.getB(), value)
+                                               && vert_coordinate_check(rec.getC(), value)
+                                               && vert_coordinate_check(rec.getD(), value))
             {
                 scene.Children.Clear();
                 rec.shiftY(value);
@@ -175,24 +170,53 @@ namespace GeomShapes
         {
             double value = e.NewValue - e.OldValue;
 
-            if (scene.Children.Count == 1)
+            if (scene.Children.Count == 1 && hor_coordinate_check(p, value))
             {
                 scene.Children.Clear();
                 p.shiftX(value);
                 drawPoint(p);
             }
-            else if (scene.Children.Count == 3)
+            else if (scene.Children.Count == 3 && hor_coordinate_check(tr.getA(), value) 
+                                               && hor_coordinate_check(tr.getB(), value) 
+                                               && hor_coordinate_check(tr.getC(), value))
             {
                 scene.Children.Clear();
                 tr.shiftX(value);
                 drawTriangle(tr);
             }
-            else if (scene.Children.Count == 4)
+            else if (scene.Children.Count == 4 && hor_coordinate_check(rec.getA(), value)
+                                               && hor_coordinate_check(rec.getB(), value)
+                                               && hor_coordinate_check(rec.getC(), value)
+                                               && hor_coordinate_check(rec.getD(), value))
             {
                 scene.Children.Clear();
                 rec.shiftX(value);
                 drawRectangle(rec);
             }
         }
+    
+        public bool vert_coordinate_check(Point2D p, double value)
+        {
+            bool res = false;
+            
+            if (0 < p.getY() + value && p.getY()+value < 347)
+                res = true;
+            else 
+                res = false;
+
+            return res;
+        }
+        public bool hor_coordinate_check(Point2D p, double value)
+        {
+            bool res = false;
+
+            if (0 < p.getX() + value && p.getX() + value < 574)
+                res = true;
+            else
+                res = false;
+
+            return res;
+        }
+
     }
 }

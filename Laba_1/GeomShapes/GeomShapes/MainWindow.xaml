@@ -18,7 +18,7 @@
         <TextBox x:Name="field_1" HorizontalAlignment="Left" Margin="628,350,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="110" Height="25"/>
         <TextBox x:Name="field_2" HorizontalAlignment="Left" Margin="628,382,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="110" Height="25"/>
         <ScrollBar x:Name="vert_bar" HorizontalAlignment="Left" Margin="38,111,0,0" VerticalAlignment="Top" Height="14" Maximum="349" Minimum="1" ValueChanged="vert_bar_ValueChanged" Orientation="Horizontal" Width="350"/>
-        <ScrollBar x:Name="hor_bar" HorizontalAlignment="Left" Margin="38,81,0,0" VerticalAlignment="Top" Height="16.4" Maximum="575" Minimum="1" Orientation="Horizontal" Width="350" ValueChanged="hor_bar_ValueChanged"/>
+        <ScrollBar x:Name="hor_bar" HorizontalAlignment="Left" Margin="38,81,0,0" VerticalAlignment="Top" Height="16.4" Maximum="574" Minimum="1" Orientation="Horizontal" Width="350" ValueChanged="hor_bar_ValueChanged"/>
         <Button x:Name="DrawTriangle1" Content="Draw Triangle" HorizontalAlignment="Left" Margin="628,219,0,0" VerticalAlignment="Top" Width="110" Height="28" Click="DrawTriangle_Click"/>
         <Label Content="Perimetr:" HorizontalAlignment="Left" Margin="14,486,0,0" VerticalAlignment="Top" Height="26" Width="57"/>
         <Label Content="Area:" HorizontalAlignment="Left" Margin="14,465,0,0" VerticalAlignment="Top" Height="26" Width="57"/>
