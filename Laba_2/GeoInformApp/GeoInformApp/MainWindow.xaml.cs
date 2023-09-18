@@ -12,6 +12,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using GMap.NET;
+using GMap.NET.MapProviders;
+using GMap.NET.WindowsPresentation;
+using System.Device.Location;
 /*
 Разработать геоинформационное приложение на базе библиотеки GMap.NET, а также:
     1. Реализовать отображение пользовательских объектов в виде маркеров на карте: местоположение, 
