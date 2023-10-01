@@ -6,14 +6,21 @@
         xmlns:local="clr-namespace:GeoInformApp"
         xmlns:WindowsPresentation="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation" x:Class="GeoInformApp.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="750" Width="1100">
+        Title="Laba_2" Height="750" Width="1100">
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="/Free-Download-HD-Wallpapers-World-Map-Desktop.jpg"/>
         </Grid.Background>
-        <Label Content="Laba_2" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Height="50" Width="102" Foreground="#FFDADADA" FontSize="36"/>
 
-        <WindowsPresentation:GMapControl Name="Map" Loaded="MapLoaded" Margin="158,106,158,106" MouseDoubleClick="Map_MouseDoubleClick"/>
+        <WindowsPresentation:GMapControl Name="Map" Loaded="MapLoaded" Margin="10,65,236,10" MouseDoubleClick="Map_MouseDoubleClick"/>
+        <ComboBox x:Name="typeMarker" HorizontalAlignment="Left" Margin="864,65,0,0" VerticalAlignment="Top" Width="162" Height="40" SelectedIndex="0" FontSize="24" SelectionChanged="typeMarker_SelectionChanged">
+            <ComboBoxItem Content="Person"/>
+            <ComboBoxItem Content="Car"/>
+            <ComboBoxItem Content="Place"/>
+            <ComboBoxItem Content="Route"/>
+            <ComboBoxItem Content="Area"/>
+        </ComboBox>
+        <Button Content="Clear" HorizontalAlignment="Left" Margin="869,137,0,0" VerticalAlignment="Top" Height="40" Width="157" FontSize="24" Click="Button_Click"/>
 
     </Grid>
 </Window>
