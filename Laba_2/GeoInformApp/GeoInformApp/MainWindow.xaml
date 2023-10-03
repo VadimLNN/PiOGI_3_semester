@@ -20,7 +20,7 @@
             <ComboBoxItem Content="Route"/>
             <ComboBoxItem Content="Area"/>
         </ComboBox>
-        <Button Content="Clear" HorizontalAlignment="Left" Margin="869,137,0,0" VerticalAlignment="Top" Height="40" Width="157" FontSize="24" Click="Button_Click"/>
+        <Button Content="Clear" HorizontalAlignment="Left" Margin="869,137,0,0" VerticalAlignment="Top" Height="40" Width="157" FontSize="24" Click="Clear_Map"/>
 
     </Grid>
 </Window>
