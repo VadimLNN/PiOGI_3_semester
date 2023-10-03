@@ -16,6 +16,7 @@ namespace GeoInformApp
         public MapObject(string title)
         {
             this.title = title;
+            creationDate = DateTime.Now;
         }
 
         string getTitle() { return title; }
@@ -25,6 +26,6 @@ namespace GeoInformApp
 
         public abstract PointLatLng getFocus();
 
-        public abstract GMapMarker GetMarker();
+        public abstract GMapMarker getMarker();
     }
 }
