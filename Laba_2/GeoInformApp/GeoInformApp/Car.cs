@@ -9,9 +9,6 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 
-/*
-    
-*/
 namespace GeoInformApp
 {
     public class Car : MapObject
@@ -49,7 +46,7 @@ namespace GeoInformApp
             return location;
         }
 
-        public override GMapMarker GetMarker()
+        public override GMapMarker getMarker()
         {
             return marker;
         }

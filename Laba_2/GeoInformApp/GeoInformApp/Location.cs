@@ -46,7 +46,7 @@ namespace GeoInformApp
             return location;
         }
 
-        public override GMapMarker GetMarker()
+        public override GMapMarker getMarker()
         {
             return marker;
         }
