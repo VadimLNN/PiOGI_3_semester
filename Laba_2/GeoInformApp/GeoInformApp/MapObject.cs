@@ -13,7 +13,7 @@ namespace GeoInformApp
         string title;
         DateTime creationDate;
 
-        public MapObject(string title, DateTime creationDate)
+        public MapObject(string title)
         {
             this.title = title;
         }
