@@ -20,7 +20,10 @@
             <ComboBoxItem Content="Route"/>
             <ComboBoxItem Content="Area"/>
         </ComboBox>
-        <Button Content="Clear" HorizontalAlignment="Left" Margin="869,137,0,0" VerticalAlignment="Top" Height="40" Width="157" FontSize="24" Click="Clear_Map"/>
+        <Button Content="Clear" HorizontalAlignment="Left" Margin="869,185,0,0" VerticalAlignment="Top" Height="40" Width="157" FontSize="24" Click="Clear_Map"/>
+        <Button Content="Add Path" HorizontalAlignment="Left" Margin="869,235,0,0" VerticalAlignment="Top" Height="40" Width="157" FontSize="24" Click="Add_Path"/>
+        <Button Content="Add Area" HorizontalAlignment="Left" Margin="869,288,0,0" VerticalAlignment="Top" Height="40" Width="157" FontSize="24" Click="Add_Area"/>
+        <TextBox x:Name="nameMark" HorizontalAlignment="Left" Margin="869,130,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="157" Height="40" FontSize="24"/>
 
     </Grid>
 </Window>

@@ -49,8 +49,10 @@ namespace GeoInformApp
     public partial class MainWindow : Window
     {
         List<PointLatLng> points = new List<PointLatLng>();
+        List<MapObject> objects = new List<MapObject>();
         GMapMarker lastPath = null;
         GMapMarker lastArea = null;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -78,25 +80,6 @@ namespace GeoInformApp
             Map.CanDragMap = true;
             Map.DragButton = MouseButton.Left;
         }
-
-        void addMarker(string toolTip, string img)
-        {
-            GMapMarker marker = new GMapMarker(points[0])
-            {
-                Shape = new Image
-                {
-                    Width = 32, // ширина маркера
-                    Height = 32, // высота маркера
-                    ToolTip = toolTip, // всплывающая подсказка
-                    Source = new BitmapImage(new Uri("pack://application:,,,/imgs/" + img)) // картинка
-                }
-            };
-
-            Map.Markers.Add(marker);
-
-            points.Clear();
-        }
-
         void addPath()
         {
             if (points.Count < 2)
@@ -118,7 +101,6 @@ namespace GeoInformApp
             lastPath = path;
             Map.Markers.Add(path);
         }
-        
         void addArea()
         {
             if (points.Count < 3)
@@ -143,31 +125,58 @@ namespace GeoInformApp
         }
         private void Map_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            points.Add(Map.FromLocalToLatLng((int)e.GetPosition(Map).X, (int)e.GetPosition(Map).Y));
-
             switch (typeMarker.SelectedIndex)
             {
                 case 0:
-                    addMarker("Person", "human.png");
+                    objects.Add(new Human(nameMark.Text, Map.FromLocalToLatLng((int)e.GetPosition(Map).X, (int)e.GetPosition(Map).Y), "human.png"));
+                    Map.Markers.Add(objects[objects.Count-1].getMarker());
                     break;
+
                 case 1:
-                    addMarker("Car", "car.png");
+                    objects.Add(new Car(nameMark.Text, Map.FromLocalToLatLng((int)e.GetPosition(Map).X, (int)e.GetPosition(Map).Y), "car.png"));
+                    Map.Markers.Add(objects[objects.Count - 1].getMarker());
                     break;
+
                 case 2:
-                    addMarker("Place", "mark.png");
+                    objects.Add(new Location(nameMark.Text, Map.FromLocalToLatLng((int)e.GetPosition(Map).X, (int)e.GetPosition(Map).Y), "mark.png"));
+                    Map.Markers.Add(objects[objects.Count - 1].getMarker());
                     break;
+
                 case 3:
+                    points.Add(Map.FromLocalToLatLng((int)e.GetPosition(Map).X, (int)e.GetPosition(Map).Y));
                     addPath();
                     break;
+
                 case 4:
+                    points.Add(Map.FromLocalToLatLng((int)e.GetPosition(Map).X, (int)e.GetPosition(Map).Y));
                     addArea();
                     break;
+
                 default: MessageBox.Show("Unknown marker type");
                         break;
 
             }
         }
-        
+
+        private void Add_Path(object sender, RoutedEventArgs e)
+        {
+            objects.Add(new Route(nameMark.Text, points));
+
+            if (lastPath != null)
+                Map.Markers.Remove(lastPath);
+
+            Map.Markers.Add(objects[objects.Count - 1].getMarker());
+        }
+        private void Add_Area(object sender, RoutedEventArgs e)
+        {
+            objects.Add(new Area(nameMark.Text, points));
+
+            if (lastArea != null)
+                Map.Markers.Remove(lastArea);
+
+            Map.Markers.Add(objects[objects.Count - 1].getMarker());
+        }
+
         private void typeMarker_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             lastPath = null;
@@ -181,6 +190,8 @@ namespace GeoInformApp
             lastArea = null;
             points.Clear();
             Map.Markers.Clear();
+            objects.Clear();
         }
+
     }
 }
