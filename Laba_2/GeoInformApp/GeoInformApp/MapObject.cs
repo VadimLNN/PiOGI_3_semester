@@ -19,7 +19,7 @@ namespace GeoInformApp
             creationDate = DateTime.Now;
         }
 
-        string getTitle() { return title; }
+        public string getTitle() { return title; }
         DateTime getCreationDate() { return creationDate; }
 
         public abstract double getDistance(PointLatLng point);

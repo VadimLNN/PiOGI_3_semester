@@ -20,6 +20,7 @@ using System.Windows.Media.Media3D;
 using System.Security.Cryptography;
 using System.Reflection;
 using System.IO;
+using System.Data.SqlTypes;
 /*
 Разработать геоинформационное приложение на базе библиотеки GMap.NET, а также:
 1. Реализовать отображение пользовательских объектов в виде маркеров на карте: местоположение, 
@@ -53,6 +54,7 @@ namespace GeoInformApp
         GMapMarker lastPath = null;
         GMapMarker lastArea = null;
 
+
         public MainWindow()
         {
             InitializeComponent();
@@ -72,6 +74,7 @@ namespace GeoInformApp
             Map.MinZoom = 2;
             Map.MaxZoom = 17;
             Map.Zoom = 15;
+
             // установка фокуса карты
             Map.Position = new PointLatLng(55.012823, 82.950359);
 
@@ -80,6 +83,7 @@ namespace GeoInformApp
             Map.CanDragMap = true;
             Map.DragButton = MouseButton.Left;
         }
+        
         void addPath()
         {
             if (points.Count < 2)
@@ -123,23 +127,28 @@ namespace GeoInformApp
             Map.Markers.Add(area); 
 
         }
+        
         private void Map_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+
             switch (typeMarker.SelectedIndex)
             {
                 case 0:
                     objects.Add(new Human(nameMark.Text, Map.FromLocalToLatLng((int)e.GetPosition(Map).X, (int)e.GetPosition(Map).Y), "human.png"));
                     Map.Markers.Add(objects[objects.Count-1].getMarker());
+                    nameList.Items.Add(nameMark.Text + " " + (objects.Count - 1).ToString());
                     break;
 
                 case 1:
                     objects.Add(new Car(nameMark.Text, Map.FromLocalToLatLng((int)e.GetPosition(Map).X, (int)e.GetPosition(Map).Y), "car.png"));
                     Map.Markers.Add(objects[objects.Count - 1].getMarker());
+                    nameList.Items.Add(nameMark.Text + " " + (objects.Count - 1).ToString());
                     break;
 
                 case 2:
                     objects.Add(new Location(nameMark.Text, Map.FromLocalToLatLng((int)e.GetPosition(Map).X, (int)e.GetPosition(Map).Y), "mark.png"));
                     Map.Markers.Add(objects[objects.Count - 1].getMarker());
+                    nameList.Items.Add(nameMark.Text + " " + (objects.Count - 1).ToString());
                     break;
 
                 case 3:
@@ -166,6 +175,7 @@ namespace GeoInformApp
                 Map.Markers.Remove(lastPath);
 
             Map.Markers.Add(objects[objects.Count - 1].getMarker());
+            nameList.Items.Add(nameMark.Text + " " + (objects.Count - 1).ToString());
         }
         private void Add_Area(object sender, RoutedEventArgs e)
         {
@@ -175,6 +185,7 @@ namespace GeoInformApp
                 Map.Markers.Remove(lastArea);
 
             Map.Markers.Add(objects[objects.Count - 1].getMarker());
+            nameList.Items.Add(nameMark.Text + " " + (objects.Count - 1).ToString());
         }
 
         private void typeMarker_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -191,7 +202,67 @@ namespace GeoInformApp
             points.Clear();
             Map.Markers.Clear();
             objects.Clear();
+            nameList.Items.Clear();
         }
 
+        private void Find_Click(object sender, RoutedEventArgs e)
+        {
+            if (objects.Count == 0) return;
+            
+            nameList.Items.Clear();
+
+            for (int i = 0; i < objects.Count; i++)
+            {
+                if (objects[i].getTitle() == findName.Text)
+                {
+                    Map.Position = objects[i].getFocus();
+                    nameList.Items.Add(objects[i].getTitle() + " " + i.ToString());
+                }
+            }
+            
+            if (nameList.Items.Count == 0)
+                nameList.Items.Add("unknown name");
+        }
+
+        private void nameList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (nameList.SelectedItem == null) return;
+
+            var nameMark = nameList.SelectedItem.ToString();
+
+            for (int i = 0; i < objects.Count; i++)
+                if (nameMark.Contains(objects[i].getTitle()) && nameMark.Substring(nameMark.LastIndexOf(" ")+1) == i.ToString())
+                    Map.Position = objects[i].getFocus();
+
+        }
+
+        private void Map_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            PointLatLng point = Map.FromLocalToLatLng((int)e.GetPosition(Map).X, (int)e.GetPosition(Map).Y);
+            double min = 100000;
+            PointLatLng locMin = Map.FromLocalToLatLng(0, 0);
+
+            Dictionary<int, double> distances = new Dictionary<int, double>();
+
+            for (int i = 0; i < objects.Count; i++)
+            {
+                double temp = objects[i].getDistance(point);
+                distances.Add(i, temp);
+                if (temp < min)
+                {
+                    min = temp;
+                    locMin = objects[i].getFocus();
+                }
+            }
+
+            Map.Position = locMin;
+
+            var sortedDict = distances.OrderBy(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
+
+            nameList.Items.Clear();
+
+            foreach(var temp in sortedDict)
+                nameList.Items.Add(objects[temp.Key].getTitle() + " " + temp.Key.ToString());
+        }
     }
 }

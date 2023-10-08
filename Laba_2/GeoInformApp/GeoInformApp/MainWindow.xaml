@@ -12,18 +12,22 @@
             <ImageBrush ImageSource="/Free-Download-HD-Wallpapers-World-Map-Desktop.jpg"/>
         </Grid.Background>
 
-        <WindowsPresentation:GMapControl Name="Map" Loaded="MapLoaded" Margin="10,65,236,10" MouseDoubleClick="Map_MouseDoubleClick"/>
-        <ComboBox x:Name="typeMarker" HorizontalAlignment="Left" Margin="864,65,0,0" VerticalAlignment="Top" Width="162" Height="40" SelectedIndex="0" FontSize="24" SelectionChanged="typeMarker_SelectionChanged">
+        <WindowsPresentation:GMapControl Name="Map" Loaded="MapLoaded" Margin="10,10,236,10" MouseDoubleClick="Map_MouseDoubleClick" MouseRightButtonDown="Map_MouseRightButtonDown"/>
+        <ComboBox x:Name="typeMarker" HorizontalAlignment="Left" Margin="879,15,0,0" VerticalAlignment="Top" Width="179" Height="40" SelectedIndex="0" FontSize="24" SelectionChanged="typeMarker_SelectionChanged">
             <ComboBoxItem Content="Person"/>
             <ComboBoxItem Content="Car"/>
             <ComboBoxItem Content="Place"/>
             <ComboBoxItem Content="Route"/>
             <ComboBoxItem Content="Area"/>
         </ComboBox>
-        <Button Content="Clear" HorizontalAlignment="Left" Margin="869,185,0,0" VerticalAlignment="Top" Height="40" Width="157" FontSize="24" Click="Clear_Map"/>
-        <Button Content="Add Path" HorizontalAlignment="Left" Margin="869,235,0,0" VerticalAlignment="Top" Height="40" Width="157" FontSize="24" Click="Add_Path"/>
-        <Button Content="Add Area" HorizontalAlignment="Left" Margin="869,288,0,0" VerticalAlignment="Top" Height="40" Width="157" FontSize="24" Click="Add_Area"/>
-        <TextBox x:Name="nameMark" HorizontalAlignment="Left" Margin="869,130,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="157" Height="40" FontSize="24"/>
+        <Button Content="Clear" HorizontalAlignment="Left" Margin="879,215,0,0" VerticalAlignment="Top" Height="40" Width="179" FontSize="24" Click="Clear_Map"/>
+        <Button Content="Add Path" HorizontalAlignment="Left" Margin="879,125,0,0" VerticalAlignment="Top" Height="40" Width="179" FontSize="24" Click="Add_Path"/>
+        <Button Content="Add Area" HorizontalAlignment="Left" Margin="879,170,0,0" VerticalAlignment="Top" Height="40" Width="179" FontSize="24" Click="Add_Area"/>
+        <TextBox x:Name="findName" HorizontalAlignment="Left" Margin="879,344,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="179" Height="40" FontSize="24"/>
+        <Label Content="Find" HorizontalAlignment="Left" Margin="879,305,0,0" VerticalAlignment="Top" Width="179" Height="40" FontSize="24" Foreground="White"/>
+        <TextBox x:Name="nameMark" HorizontalAlignment="Left" Margin="879,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="179" Height="40" FontSize="24"/>
+        <Button Content="Ok" HorizontalAlignment="Left" Margin="879,390,0,0" VerticalAlignment="Top" Height="40" Width="179" FontSize="24" Click="Find_Click"/>
+        <ListBox x:Name="nameList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="879,435,26,10" SelectionChanged="nameList_SelectionChanged"/>
 
     </Grid>
 </Window>
