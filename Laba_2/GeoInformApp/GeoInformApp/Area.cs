@@ -14,12 +14,12 @@ namespace GeoInformApp
     {
         List<PointLatLng> locations;
         GMapMarker area;
-        public Area(string title, List<PointLatLng> locations) : base(title)
+        public Area(string title, List<PointLatLng> Locations) : base(title)
         {
-            this.locations = locations;
-
-            if (locations.Count < 3)
+            if (Locations.Count < 3)
                 return;
+
+            this.locations = new List<PointLatLng>(Locations);
 
             area = new GMapPolygon(locations)
             {

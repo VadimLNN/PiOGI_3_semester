@@ -16,12 +16,12 @@ namespace GeoInformApp
     {
         List <PointLatLng> locations;
         GMapMarker path;
-        public Route(string title, List <PointLatLng> locations) : base(title)
+        public Route(string title, List<PointLatLng> Locations) : base(title)
         {
-             this.locations = locations;
-
-            if (locations.Count < 2)
+            if (Locations.Count < 2)
                 return;
+
+            this.locations = new List<PointLatLng>(Locations);
 
             path = new GMapRoute(locations)
             {
