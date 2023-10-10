@@ -34,7 +34,7 @@ namespace GeoInformApp
         }
         public override double getDistance(PointLatLng point)
         {
-            double min = 0;
+            double min = 10000000;
             GeoCoordinate c2 = new GeoCoordinate(point.Lat, point.Lng);
             for (int i = 0; i < locations.Count; i++)
             {
