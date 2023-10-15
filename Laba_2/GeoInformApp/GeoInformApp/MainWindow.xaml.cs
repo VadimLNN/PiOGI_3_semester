@@ -100,6 +100,7 @@ namespace GeoInformApp
             Map.CanDragMap = true;
             Map.DragButton = MouseButton.Left;
         }
+        
         void addPath()
         {
             if (points.Count < 2)
@@ -143,6 +144,7 @@ namespace GeoInformApp
             Map.Markers.Add(area); 
 
         }
+        
         private void Map_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             switch (typeMarker.SelectedIndex)
