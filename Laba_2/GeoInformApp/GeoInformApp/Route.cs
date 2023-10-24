@@ -49,15 +49,11 @@ namespace GeoInformApp
 
             return min; 
         }
+        public override PointLatLng getFocus() { return locations[0]; }
+        public override GMapMarker getMarker() { return path; }
 
-        public override PointLatLng getFocus()
-        {
-            return locations[0];
-        }
+        //#################################### Lab 2 #############################################
 
-        public override GMapMarker getMarker()
-        {
-            return path;
-        }
+        public List<PointLatLng> getLocations() { return locations; }
     }
 }

@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using System.Windows.Controls;
+using System.Windows;
 
 namespace GeoInformApp
 {
@@ -40,15 +41,19 @@ namespace GeoInformApp
             return c1.GetDistanceTo(c2);
 
         }
+        public override PointLatLng getFocus() { return location; }
+        public override GMapMarker getMarker() { return marker; }
 
-        public override PointLatLng getFocus()
+        //#################################### Lab 2 #############################################
+        
+        PointLatLng destination;
+
+        // обработчик события прибытия такси
+        public void CarArrived(object sender, EventArgs e)
         {
-            return location;
+             // TODO : сесть в машину
         }
 
-        public override GMapMarker getMarker()
-        {
-            return marker;
-        }
+
     }
 }

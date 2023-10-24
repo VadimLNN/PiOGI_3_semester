@@ -80,11 +80,12 @@ namespace GeoInformApp
 
         private void MapLoaded(object sender, RoutedEventArgs e)
         {
-            // настройка доступа к данным
-            GMaps.Instance.Mode = AccessMode.ServerAndCache;
+            GMaps.Instance.Mode = AccessMode.ServerAndCache; // настройка доступа к данным
+            // ключ проверки подлинности карт
+            BingMapProvider.Instance.ClientKey = "9c20Y4eqPpx1xMu0lmor~sNbgMB8wEWudshcBad5TYA~AnMs7-dXI4O8C3a0ZXj-cUsXEUSmprSh6JNBTVgVN9WleaiP8XWYXUTA8XLh0e5W";
 
             // установка провайдера карт
-            Map.MapProvider = GoogleMapProvider.Instance;
+            Map.MapProvider = BingMapProvider.Instance;
             // GoogleMapProvider     +
             // OpenCycleMapProvider  +
 
@@ -92,6 +93,7 @@ namespace GeoInformApp
             Map.MinZoom = 2;
             Map.MaxZoom = 17;
             Map.Zoom = 15;
+
             // установка фокуса карты
             Map.Position = new PointLatLng(55.012823, 82.950359);
 
@@ -99,6 +101,8 @@ namespace GeoInformApp
             Map.MouseWheelZoomType = MouseWheelZoomType.MousePositionAndCenter;
             Map.CanDragMap = true;
             Map.DragButton = MouseButton.Left;
+
+            
         }
         
         void addPath()
@@ -281,9 +285,12 @@ namespace GeoInformApp
                 nameList.Items.Add(objects[temp.Key].getTitle() + " " + temp.Key.ToString());
         }
 
-        //#####################################################################################
+        //#################################### Lab 2 #############################################
 
-
+        private void Start_Click(object sender, RoutedEventArgs e)
+        {
+            ((Car)objects[1]).moveTo(objects[0].getFocus());
+        }
 
     }
 }

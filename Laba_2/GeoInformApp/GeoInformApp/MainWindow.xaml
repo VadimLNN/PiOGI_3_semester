@@ -12,7 +12,7 @@
             <ImageBrush ImageSource="/Free-Download-HD-Wallpapers-World-Map-Desktop.jpg"/>
         </Grid.Background>
 
-        <WindowsPresentation:GMapControl Name="Map" Loaded="MapLoaded" Margin="10,10,236,10" MouseDoubleClick="Map_MouseDoubleClick" MouseRightButtonDown="Map_MouseRightButtonDown"/>
+        <WindowsPresentation:GMapControl Name="Map" Loaded="MapLoaded" Margin="10,125,236,10" MouseDoubleClick="Map_MouseDoubleClick" MouseRightButtonDown="Map_MouseRightButtonDown"/>
         <ComboBox x:Name="typeMarker" HorizontalAlignment="Left" Margin="879,15,0,0" VerticalAlignment="Top" Width="179" Height="40" SelectedIndex="0" FontSize="24" SelectionChanged="typeMarker_SelectionChanged">
             <ComboBoxItem Content="Person"/>
             <ComboBoxItem Content="Car"/>
@@ -28,6 +28,8 @@
         <TextBox x:Name="nameMark" HorizontalAlignment="Left" Margin="879,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="179" Height="40" FontSize="24"/>
         <Button Content="Ok" HorizontalAlignment="Left" Margin="879,390,0,0" VerticalAlignment="Top" Height="40" Width="179" FontSize="24" Click="Find_Click"/>
         <ListBox x:Name="nameList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="879,435,26,10" SelectionChanged="nameList_SelectionChanged"/>
+        <ProgressBar x:Name="progress" HorizontalAlignment="Left" Height="20" Margin="10,90,0,0" VerticalAlignment="Top" Width="854"/>
+        <Button Content="Start" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top" Height="40" Width="179" FontSize="24" Click="Start_Click"/>
 
     </Grid>
 </Window>
