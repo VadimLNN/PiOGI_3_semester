@@ -10,7 +10,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Xml.Linq;
 
 namespace GeoInformApp
 {
@@ -19,9 +21,10 @@ namespace GeoInformApp
         PointLatLng location;
         GMapMarker marker;
 
-        public Car(string title, PointLatLng locftion, string img) : base(title)
+        public Car(string title, PointLatLng locftion, string img, GMapControl gMap) : base(title)
         {
             this.location = locftion;
+            this.gMap = gMap;
 
             marker = new GMapMarker(location)
             {
@@ -51,15 +54,25 @@ namespace GeoInformApp
 
         Route route;
         Human person;
+        GMapControl gMap;
 
         public int DEFAULT_ZOOM { get; private set; }
 
         // событие прибытия
         public event EventHandler Arrived;
 
-        public void pessengerSeated(object sender, EventArgs e)
+        public void setPerson(Human human)
         {
+            person = human;
+        }
 
+        public void passengerSeated(object sender, EventArgs e)
+        {
+            person = (Human)sender;
+
+            Application.Current.Dispatcher.Invoke(delegate {
+                gMap.Markers.Add(moveTo(person.getDestanation()));
+            });
         }
 
         public void moveByRoute()
@@ -67,19 +80,31 @@ namespace GeoInformApp
             // последовательный перебор точек маршрута
             foreach (var point in route.getLocations())
             {
+                this.location = point;
                 // делегат, возвращающий управление в главный поток
                 Application.Current.Dispatcher.Invoke(delegate {
                     // изменение позиции маркера
                     marker.Position = point;
+                    gMap.Position = point;
+                    if (person != null)
+                    {
+                        person.setLocation(point);
+                        person.getMarker().Position = point;
+                    }
                 });
                 // задержка 500 мс
-                Thread.Sleep(350);
+                Thread.Sleep(500);
             }
-
-            Arrived?.Invoke(this, null);
+            if (person == null)
+                Arrived?.Invoke(this, null);
+            else
+            {
+                person.endOfRoad();
+                person = null;
+            }
         }
 
-        public void moveTo(PointLatLng endLocation) 
+        public GMapMarker moveTo(PointLatLng endLocation) 
         {
             // определение маршрута
             MapRoute route = BingMapProvider.Instance.GetRoute(
@@ -95,6 +120,8 @@ namespace GeoInformApp
 
             Thread newThread = new Thread(new ThreadStart(moveByRoute));
             newThread.Start();
+
+            return this.route.getMarker();
         }
     }
 }

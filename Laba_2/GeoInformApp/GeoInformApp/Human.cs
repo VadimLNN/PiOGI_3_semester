@@ -16,9 +16,9 @@ namespace GeoInformApp
     {
         PointLatLng location;
         GMapMarker marker;
-        public Human(string title, PointLatLng locftion, string img) : base(title)
+        public Human(string title, PointLatLng location, string img) : base(title)
         {
-            this.location = locftion;
+            this.location = location;
 
             marker = new GMapMarker(location)
             {
@@ -48,12 +48,21 @@ namespace GeoInformApp
         
         PointLatLng destination;
 
+        public event EventHandler passengerSeated;
+
+        public void setLocation(PointLatLng loc) { location = loc; }
+
         // обработчик события прибытия такси
         public void CarArrived(object sender, EventArgs e)
         {
-             // TODO : сесть в машину
+            passengerSeated?.Invoke(this, EventArgs.Empty);
+        }
+        public void endOfRoad()
+        {
+            MessageBox.Show("Win");
         }
 
-
+        public void setDestanation(PointLatLng dest) { destination = dest; }
+        public PointLatLng getDestanation() { return destination; }  
     }
 }

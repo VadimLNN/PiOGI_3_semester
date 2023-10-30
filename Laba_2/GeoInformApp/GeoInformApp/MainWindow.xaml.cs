@@ -20,6 +20,7 @@ using System.Windows.Media.Media3D;
 using System.Security.Cryptography;
 using System.Reflection;
 using System.IO;
+using System.Runtime.ConstrainedExecution;
 /*
 Разработать геоинформационное приложение на базе библиотеки GMap.NET, а также:
     1. Реализовать отображение пользовательских объектов в виде маркеров на карте: местоположение,              Y
@@ -82,7 +83,7 @@ namespace GeoInformApp
         {
             GMaps.Instance.Mode = AccessMode.ServerAndCache; // настройка доступа к данным
             // ключ проверки подлинности карт
-            BingMapProvider.Instance.ClientKey = "9c20Y4eqPpx1xMu0lmor~sNbgMB8wEWudshcBad5TYA~AnMs7-dXI4O8C3a0ZXj-cUsXEUSmprSh6JNBTVgVN9WleaiP8XWYXUTA8XLh0e5W";
+            BingMapProvider.Instance.ClientKey = "AkU9vDRKUdajnTCDjTodO4GSYul9SZyPO-f8tNqHV_xLbii_zjEV2ujVk1QoEnxl";
 
             // установка провайдера карт
             Map.MapProvider = BingMapProvider.Instance;
@@ -160,15 +161,22 @@ namespace GeoInformApp
                     break;
 
                 case 1:
-                    objects.Add(new Car(nameMark.Text, Map.FromLocalToLatLng((int)e.GetPosition(Map).X, (int)e.GetPosition(Map).Y), "car.png"));
+                    objects.Add(new Car(nameMark.Text, Map.FromLocalToLatLng((int)e.GetPosition(Map).X, (int)e.GetPosition(Map).Y), "car.png", Map));
                     Map.Markers.Add(objects[objects.Count - 1].getMarker());
                     nameList.Items.Add(nameMark.Text + " " + (objects.Count - 1).ToString());
+                    
+                    
+                    ((Car)objects[1]).Arrived += ((Human)objects[0]).CarArrived;
+                    ((Human)objects[0]).passengerSeated += ((Car)objects[1]).passengerSeated;
                     break;
 
                 case 2:
                     objects.Add(new Location(nameMark.Text, Map.FromLocalToLatLng((int)e.GetPosition(Map).X, (int)e.GetPosition(Map).Y), "mark.png"));
                     Map.Markers.Add(objects[objects.Count - 1].getMarker());
                     nameList.Items.Add(nameMark.Text + " " + (objects.Count - 1).ToString());
+
+
+                    ((Human)objects[0]).setDestanation(((Location)objects[2]).getFocus());
                     break;
 
                 case 3:
@@ -286,10 +294,10 @@ namespace GeoInformApp
         }
 
         //#################################### Lab 2 #############################################
-
+        
         private void Start_Click(object sender, RoutedEventArgs e)
         {
-            ((Car)objects[1]).moveTo(objects[0].getFocus());
+            Map.Markers.Add(((Car)objects[1]).moveTo(objects[0].getFocus()));
         }
 
     }
