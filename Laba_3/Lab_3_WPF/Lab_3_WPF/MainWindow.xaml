@@ -5,8 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Lab_3_WPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="Lab_4" Height="472" Width="534">
+    <Grid Background="#FFA3EAE1">
+        <local:Card x:Name="card_1" HorizontalAlignment="Left" Margin="32,24,0,0" VerticalAlignment="Top"/>
+        <local:Card x:Name="card_2" HorizontalAlignment="Left" Margin="32,161,0,0" VerticalAlignment="Top"/>
+        <local:Card x:Name="card_3" HorizontalAlignment="Left" Margin="32,299,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="tb_1" HorizontalAlignment="Left" Margin="331,30,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="bt_1" Content="Change name" HorizontalAlignment="Left" Margin="331,60,0,0" VerticalAlignment="Top" Width="120" Click="bt_1_Click"/>
+        <TextBox x:Name="tb_2" HorizontalAlignment="Left" Margin="331,175,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="bt_2" Content="Change name" HorizontalAlignment="Left" Margin="331,209,0,0" VerticalAlignment="Top" Width="120" Click="bt_2_Click"/>
+        <TextBox x:Name="tb_3" HorizontalAlignment="Left" Margin="331,312,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="bt_3" Content="Change name" HorizontalAlignment="Left" Margin="331,342,0,0" VerticalAlignment="Top" Width="120" Click="bt_3_Click"/>
+
     </Grid>
 </Window>
