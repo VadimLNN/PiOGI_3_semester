@@ -5,11 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:meme_catalog"
         mc:Ignorable="d"
-        Title="Coursework" Height="450" Width="800">
+        Title="Coursework" Height="550" Width="900">
     <Window.Background>
         <ImageBrush ImageSource="/43d5419c10a281125d84972cf465627c.jpeg"/>
     </Window.Background>
     <Grid>
+        <ListBox x:Name="meme_list" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,10,627,26" Background="#FF264E89" Foreground="White" FontSize="20" BorderBrush="#FF7093FF"/>
+        <Image x:Name="meme_img" HorizontalAlignment="Left" Height="218" Margin="293,10,0,0" VerticalAlignment="Top" Width="238"/>
+        <ComboBox x:Name="meme_categories" HorizontalAlignment="Left" Margin="293,279,0,0" VerticalAlignment="Top" Width="188" Height="40" FontSize="20" BorderBrush="#FF7093FF"/>
+        <Label Content="Find a meme" HorizontalAlignment="Left" Margin="293,322,0,0" VerticalAlignment="Top" Height="40" Width="188" FontSize="24" Foreground="White"/>
+        <TextBox x:Name="meme_find" HorizontalAlignment="Left" Margin="293,367,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="188" Height="40" FontSize="20" BorderBrush="#FF7093FF"/>
+        <Label Content="Categories&#xD;&#xA;" HorizontalAlignment="Left" Margin="293,237,0,0" VerticalAlignment="Top" Height="42" Width="188" FontSize="24" Foreground="White"/>
+        <Button Content="Delete mem" HorizontalAlignment="Left" Margin="551,11,0,0" VerticalAlignment="Top" Height="40" Width="188" FontSize="22" Background="#FF264E89" Foreground="White" BorderBrush="#FF7093FF"/>
+        <Button Content="Download mem" HorizontalAlignment="Left" Margin="551,67,0,0" VerticalAlignment="Top" Height="40" Width="188" FontSize="22" Background="#FF264E89" Foreground="White" BorderBrush="#FF7093FF"/>
+        <Button Content="Save mem" HorizontalAlignment="Left" Margin="551,127,0,0" VerticalAlignment="Top" Height="40" Width="188" FontSize="22" Background="#FF264E89" Foreground="White" BorderBrush="#FF7093FF"/>
 
     </Grid>
 </Window>
