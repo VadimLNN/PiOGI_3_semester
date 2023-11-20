@@ -5,8 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:meme_catalog"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Coursework" Height="450" Width="800">
+    <Window.Background>
+        <ImageBrush ImageSource="/43d5419c10a281125d84972cf465627c.jpeg"/>
+    </Window.Background>
     <Grid>
-        
+
     </Grid>
 </Window>
