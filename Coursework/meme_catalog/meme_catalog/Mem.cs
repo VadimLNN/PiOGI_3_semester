@@ -8,14 +8,15 @@ namespace meme_catalog
 {
     internal class Mem
     {
-        public int UID { get; set; }
         public string Name { get; set; }
         public string Img { get; set; }
         public string Tag { get; set; }
+        public Mem() { }
         public Mem(string name, string img)
         {
             Name = name;
             Img = img;
+            Tag = "";
         }
         public Mem(string name, string img, string tag)
         {

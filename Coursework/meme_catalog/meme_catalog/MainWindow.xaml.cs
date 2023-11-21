@@ -12,27 +12,38 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Text.Json;
+using Microsoft.Win32;
+using System.IO;
+using System.Drawing;
+using System.Net;
+using System.Drawing.Imaging;
+using Image = System.Drawing.Image;
 
 /*
-    Список мемов
+    Список мемов    Yes
         В главном окне приложения должен присутствовать LisBox, TreeView или
         другой подобный компонент со списком названий мемов. При выделении
         одного из элементов списка происходит отображение соответствующей
         картинки в ImageBox.
-    Фильтрация по категории
+
+    Фильтрация по категории    Yes
         В главном окне должен присутствовать ComboBox со списком категорий.
         При выборе определенной категории в списке мемов должны оставаться
         только те мемы, которые относятся к выбранной категории.
-    Поиск по названию
+
+    Поиск по названию    Yes
         В главном окне должно присутствовать поле ввода для поиска по названию.
         При вводе текста в это поле ввода в списке мемов должны оставаться только
         те мемы, которые содержат в названии введенный текст (без учета регистра).
-    Добавление мема в каталог
+
+    Добавление мема в каталог    Yes
         Добавление мема в каталог должно осуществляться через диалоговое окно,
         которое имеет следующие поля ввода: название мема, расположение на
         диске, категория и др. по желанию. Расположение на диске нужно указывать
         с помощью OpenFileDialog.
-    Удаление мема
+
+    Удаление мема    Yes
         В главном окне должна присутствовать кнопка «Удалить мем». При нажатии
         на эту кнопку, выделенный мем должен удаляться.
         Хранение данных о мемах должно быть реализовано с помощью json или xml
@@ -40,6 +51,7 @@ using System.Windows.Shapes;
         «Сохранить» и «Загрузить». При сохранении информация о добавленных
         мемах должна записаться в файл, при загрузке должен отобразиться список
         ранее сохраненных мемов.
+
     Доп. задания на хорошо и отлично:
         - реализовать возможность добавления мема по url;
         - реализовать возможность добавления тегов с поиском по тегам.
@@ -49,9 +61,168 @@ namespace meme_catalog
 {
     public partial class MainWindow : Window
     {
+        // Каталог с мемами
+        List<Mem> memes = new List<Mem>();
+        
+        // Json файл с мемами 
+        static string fileName = "MemesCatalog.json";
+
         public MainWindow()
         {
             InitializeComponent();
+
+            // чтение мемов из Json файла 
+            List <Mem> readed_memes = JsonSerializer.Deserialize<List<Mem>>(File.ReadAllText(fileName));
+
+            //
+            meme_categories.Items.Add("all");
+
+            // обновление списка мемов 
+            foreach (Mem mem in readed_memes)
+            {
+                // добавление мемов в main список 
+                memes.Add(mem);
+
+                // добавление мемов в ListBox
+                meme_list.Items.Add(mem.Name);
+
+                // добавление категорий в ComboBox
+                if (!(meme_categories.Items.Contains(mem.Tag)))
+                    meme_categories.Items.Add(mem.Tag);
+
+            }
+        }
+
+        private void meme_down_Click(object sender, RoutedEventArgs e)
+        {
+            // поиск файла img 
+            OpenFileDialog dlg = new OpenFileDialog();
+            if (!(bool)dlg.ShowDialog())
+                return;
+
+            // запись пути до img 
+            Uri fileUri = new Uri(dlg.FileName);
+
+            // открытие окна для записи тега и имени мема 
+            Add_meme add_mem_wnd = new Add_meme();
+
+            if (add_mem_wnd.ShowDialog() == true)
+            {
+                // перевод картинки в строку байт
+                byte[] imageArray = System.IO.File.ReadAllBytes(dlg.FileName);
+                string base64ImageRepresentation = Convert.ToBase64String(imageArray);
+
+                // создание мема из собранных данных
+                Mem mem = new Mem(add_mem_wnd.add_name_meme.Text, base64ImageRepresentation, add_mem_wnd.add_tag_meme.Text);
+
+                // добавление мема в каталог и ListBox
+                memes.Add(mem);
+                meme_list.Items.Add(mem.Name);
+
+                // добавление категорий в ComboBox
+                if (!(meme_categories.Items.Contains(mem.Tag)))
+                    meme_categories.Items.Add(mem.Tag);
+            }
+            
+
+        }
+        
+        static ImageSource ByteToImage(byte[] imageData)
+        {
+            var bitmap = new BitmapImage();
+            MemoryStream ms = new MemoryStream(imageData);
+            bitmap.BeginInit();
+            bitmap.StreamSource = ms;
+            bitmap.EndInit();
+
+            return (ImageSource)bitmap;
+        }
+
+        private void memes_save_Click(object sender, RoutedEventArgs e)
+        {
+            // запись мемов в файл
+            string jsonString = JsonSerializer.Serialize(memes);
+            File.WriteAllText(fileName, jsonString);
+        }
+
+        private void meme_list_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (meme_list.SelectedIndex != -1)
+                meme_img.Source = ByteToImage(Convert.FromBase64String(memes[meme_list.SelectedIndex].Img));
+        }
+
+        private void meme_del_Click(object sender, RoutedEventArgs e)
+        {
+            if (meme_list.SelectedIndex != -1)
+            {
+                memes.Remove(memes[meme_list.SelectedIndex]);
+                meme_list.Items.Clear();
+
+                foreach (Mem mem in memes)
+                {
+                    meme_list.Items.Add(mem.Name);
+                }
+            }
+        }
+
+        private void find_mem_Click(object sender, RoutedEventArgs e)
+        {
+            meme_list.Items.Clear();
+            foreach (Mem mem in memes)
+            {
+                if (mem.Name.ToLower().Contains(meme_find.Text.ToLower()))
+                    meme_list.Items.Add(mem.Name);
+            }
+        }
+        
+        private void meme_categories_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (meme_categories.SelectedIndex != -1 )
+            {
+                meme_list.Items.Clear();
+                if (meme_categories.SelectedItem.ToString().Equals("all"))
+                {
+                    foreach (Mem mem in memes)
+                        meme_list.Items.Add(mem.Name);
+                    return;
+                }
+
+                foreach (Mem mem in memes)
+                {
+                    if (mem.Tag == meme_categories.SelectedItem.ToString())
+                        meme_list.Items.Add(mem.Name);
+                }
+            }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            using (WebClient webClient = new WebClient())
+            {
+                byte[] data = webClient.DownloadData("https://fbcdn-sphotos-h-a.akamaihd.net/hphotos-ak-xpf1/v/t34.0-12/10555140_10201501435212873_1318258071_n.jpg?oh=97ebc03895b7acee9aebbde7d6b002bf&oe=53C9ABB0&__gda__=1405685729_110e04e71d9");
+
+                using (MemoryStream mem = new MemoryStream(data))
+                {
+                    using (var yourImage = Image.FromStream(mem))
+                    {
+                        // If you want it as Png
+                        // yourImage.Save("path_to_your_file.png", ImageFormat.Png);
+
+                        // If you want it as Jpeg
+                        yourImage.Save("path_to_your_file.jpg", ImageFormat.Jpeg);
+                    }
+                }
+
+                // перевод картинки в строку байт
+                byte[] imageArray = System.IO.File.ReadAllBytes(dlg.FileName);
+                string base64ImageRepresentation = Convert.ToBase64String(imageArray);
+
+
+                Mem memchik = new Mem("testUrl", base64ImageRepresentation, add_mem_wnd.add_tag_meme.Text);
+
+
+
+            }
         }
     }
 }
