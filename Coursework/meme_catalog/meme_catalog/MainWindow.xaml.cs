@@ -90,8 +90,8 @@ namespace meme_catalog
                     meme_list.Items.Add(mem.Name);
 
                     // добавление категорий в ComboBox
-                    if (!(meme_categories.Items.Contains(mem.Tag)))
-                        meme_categories.Items.Add(mem.Tag);
+                    if (!(meme_categories.Items.Contains(mem.Category)))
+                        meme_categories.Items.Add(mem.Category);
 
                 }
             }
@@ -151,7 +151,7 @@ namespace meme_catalog
 
         private void meme_list_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if ((meme_categories.SelectedIndex != -1 && meme_categories.SelectedIndex != 0) || meme_find.Text.Length > 0)
+            if ((meme_categories.SelectedIndex != -1 && meme_categories.SelectedIndex != 0) || (meme_find.Text.Length > 0 && meme_categories.SelectedIndex != 0))
             {
                 if (meme_list.SelectedIndex != -1)
                     meme_img.Source = ByteToImage(Convert.FromBase64String(temp_memes[meme_list.SelectedIndex].Img));
@@ -203,7 +203,7 @@ namespace meme_catalog
                 
                 foreach (Mem mem in memes)
                 {
-                    if (mem.Tag == meme_categories.SelectedItem.ToString())
+                    if (mem.Category == meme_categories.SelectedItem.ToString())
                     {
                         meme_list.Items.Add(mem.Name);
                         temp_memes.Add(mem);
@@ -233,8 +233,8 @@ namespace meme_catalog
                 meme_list.Items.Add(mem.Name);
 
                 // добавление категорий в ComboBox
-                if (!(meme_categories.Items.Contains(mem.Tag)))
-                    meme_categories.Items.Add(mem.Tag);
+                if (!(meme_categories.Items.Contains(mem.Category)))
+                    meme_categories.Items.Add(mem.Category);
             }
         }
     }
