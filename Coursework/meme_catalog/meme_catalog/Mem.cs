@@ -10,19 +10,19 @@ namespace meme_catalog
     {
         public string Name { get; set; }
         public string Img { get; set; }
-        public string Tag { get; set; }
+        public string Category { get; set; }
         public Mem() { }
         public Mem(string name, string img)
         {
             Name = name;
             Img = img;
-            Tag = "";
+            Category = "";
         }
-        public Mem(string name, string img, string tag)
+        public Mem(string name, string img, string category)
         {
             Name = name;
             Img = img;
-            Tag = tag;
+            Category = category;
         }
 
     }

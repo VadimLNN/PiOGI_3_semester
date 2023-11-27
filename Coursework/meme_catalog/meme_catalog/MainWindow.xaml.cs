@@ -71,14 +71,14 @@ namespace meme_catalog
         public MainWindow()
         {
             InitializeComponent();
-            
+
             // добавдение общей категории
             meme_categories.Items.Add("all");
-            
+
             if (File.Exists(fileName))
             {
                 // чтение мемов из Json файла 
-                List <Mem> readed_memes = JsonSerializer.Deserialize<List<Mem>>(File.ReadAllText(fileName));
+                List<Mem> readed_memes = JsonSerializer.Deserialize<List<Mem>>(File.ReadAllText(fileName));
 
                 // обновление списка мемов 
                 foreach (Mem mem in readed_memes)
@@ -124,13 +124,13 @@ namespace meme_catalog
                 meme_list.Items.Add(mem.Name);
 
                 // добавление категорий в ComboBox
-                if (!(meme_categories.Items.Contains(mem.Tag)))
-                    meme_categories.Items.Add(mem.Tag);
+                if (!(meme_categories.Items.Contains(mem.Category)))
+                    meme_categories.Items.Add(mem.Category);
             }
-            
+
 
         }
-        
+
         static ImageSource ByteToImage(byte[] imageData)
         {
             var bitmap = new BitmapImage();
@@ -189,7 +189,7 @@ namespace meme_catalog
         
         private void meme_categories_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (meme_categories.SelectedIndex != -1 )
+            if (meme_categories.SelectedIndex != -1)
             {
                 meme_list.Items.Clear();
                 if (meme_categories.SelectedItem.ToString().Equals("all"))
