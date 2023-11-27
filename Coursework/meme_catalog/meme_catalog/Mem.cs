@@ -18,15 +18,12 @@ namespace meme_catalog
             Name = name;
             Img = img;
             Category = category;
+            Tags = new List<string>();
         }
 
         public void add_tag(string tag)
         {
             Tags.Add(tag);
-        }
-        public List<string> get_tags()
-        {
-            return Tags;
         }
     }
 }

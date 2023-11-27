@@ -151,19 +151,19 @@ namespace meme_catalog
 
         private void meme_list_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if ((meme_categories.SelectedIndex != -1 && meme_categories.SelectedIndex != 0) || (meme_find.Text.Length > 0 && meme_categories.SelectedIndex != 0))
+            if ((meme_categories.SelectedIndex == -1 || meme_categories.SelectedIndex == 0) && (meme_find.Text.Length == 0 && meme_find_by_tag.Text.Length == 0))
             {
                 if (meme_list.SelectedIndex != -1)
-                    meme_img.Source = ByteToImage(Convert.FromBase64String(temp_memes[meme_list.SelectedIndex].Img));
+                    meme_img.Source = ByteToImage(Convert.FromBase64String(memes[meme_list.SelectedIndex].Img));
             }
             else
                 if (meme_list.SelectedIndex != -1)
-                    meme_img.Source = ByteToImage(Convert.FromBase64String(memes[meme_list.SelectedIndex].Img));
+                    meme_img.Source = ByteToImage(Convert.FromBase64String(temp_memes[meme_list.SelectedIndex].Img));
         }
 
         private void meme_del_Click(object sender, RoutedEventArgs e)
         {
-            if (meme_list.SelectedIndex != -1)
+            if (meme_list.SelectedIndex != -1 && meme_list.Items.Count == memes.Count)
             {
                 memes.Remove(memes[meme_list.SelectedIndex]);
                 meme_list.Items.Clear();
@@ -171,6 +171,8 @@ namespace meme_catalog
                 foreach (Mem mem in memes)
                     meme_list.Items.Add(mem.Name);
             }
+            else
+                MessageBox.Show("Select category all");
         }
 
         private void find_mem_Click(object sender, RoutedEventArgs e)
@@ -212,7 +214,7 @@ namespace meme_catalog
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void meme_url_down_Click(object sender, RoutedEventArgs e)
         {
             Add_url_meme add_url_mem_wnd = new Add_url_meme();
 
@@ -236,6 +238,33 @@ namespace meme_catalog
                 if (!(meme_categories.Items.Contains(mem.Category)))
                     meme_categories.Items.Add(mem.Category);
             }
+        }
+
+        private void find_mem_by_tag_Click(object sender, RoutedEventArgs e)
+        {
+            meme_list.Items.Clear();
+            temp_memes.Clear();
+            foreach (Mem mem in memes)
+            {
+                foreach (string tag in mem.Tags)
+                {
+                    if (tag.ToLower().Equals(meme_find_by_tag.Text.ToLower()))
+                    {
+                        meme_list.Items.Add(mem.Name);
+                        temp_memes.Add(mem);
+                    }
+                }
+            }
+        }
+
+        private void add_tag_Click(object sender, RoutedEventArgs e)
+        {
+            if (meme_list.SelectedIndex != -1 && meme_list.Items.Count == memes.Count && meme_add_tag.Text.Length > 0)
+            {
+                memes[meme_list.SelectedIndex].add_tag(meme_add_tag.Text);
+            }
+            else
+                MessageBox.Show("Select category all or fill in the tag field");
         }
     }
 }
