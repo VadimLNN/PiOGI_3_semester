@@ -39,6 +39,7 @@ namespace Laba_6_nunit_tests
         // ############## 4 ##############
         public int remainder_of_division(int a, int b) 
         {
+            if (b <= 0) throw new ArgumentException("Ne deli NA 0");
             return a % b;
         }
 

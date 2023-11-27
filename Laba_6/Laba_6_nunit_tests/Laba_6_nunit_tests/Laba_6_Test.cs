@@ -44,8 +44,14 @@ namespace Laba_6_nunit_tests
         [TestCase]
         public void TestRemainder_of_division()
         {
+            var exception = Assert.Throws<ArgumentException>(() => calculator.remainder_of_division(2, 0));
+            Assert.That(exception.Message, Is.EqualTo("Ne deli NA 0"));
+            Assert.DoesNotThrow(() => calculator.remainder_of_division(2, 1));
+
             Assert.AreEqual(1, calculator.remainder_of_division(7, 2));
             Assert.AreEqual(0, calculator.remainder_of_division(8, 2));
+
+            
         }
 
     }
