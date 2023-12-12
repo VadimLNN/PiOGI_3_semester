@@ -1,24 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Text.Json;
 using Microsoft.Win32;
 using System.IO;
-using System.Drawing;
 using System.Net;
-using System.Drawing.Imaging;
-using Image = System.Drawing.Image;
 
 /*
     Список мемов    Yes
@@ -130,7 +119,31 @@ namespace meme_catalog
 
 
         }
+        private void meme_url_down_Click(object sender, RoutedEventArgs e)
+        {
+            Add_url_meme add_url_mem_wnd = new Add_url_meme();
 
+            if (add_url_mem_wnd.ShowDialog() == true)
+            {
+                WebClient client = new WebClient();
+
+                string imageUrl = add_url_mem_wnd.url.Text;
+
+                byte[] imageArray = client.DownloadData(imageUrl);
+
+                string base64ImageRepresentation = Convert.ToBase64String(imageArray);
+
+                Mem mem = new Mem(add_url_mem_wnd.name.Text, base64ImageRepresentation, add_url_mem_wnd.tag.Text);
+
+                // добавление мема в каталог и ListBox
+                memes.Add(mem);
+                meme_list.Items.Add(mem.Name);
+
+                // добавление категорий в ComboBox
+                if (!(meme_categories.Items.Contains(mem.Category)))
+                    meme_categories.Items.Add(mem.Category);
+            }
+        }
         static ImageSource ByteToImage(byte[] imageData)
         {
             var bitmap = new BitmapImage();
@@ -142,25 +155,14 @@ namespace meme_catalog
             return (ImageSource)bitmap;
         }
 
+
+
         private void memes_save_Click(object sender, RoutedEventArgs e)
         {
             // запись мемов в файл
             string jsonString = JsonSerializer.Serialize(memes);
             File.WriteAllText(fileName, jsonString);
         }
-
-        private void meme_list_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if ((meme_categories.SelectedIndex == -1 || meme_categories.SelectedIndex == 0) && (meme_find.Text.Length == 0 && meme_find_by_tag.Text.Length == 0))
-            {
-                if (meme_list.SelectedIndex != -1)
-                    meme_img.Source = ByteToImage(Convert.FromBase64String(memes[meme_list.SelectedIndex].Img));
-            }
-            else
-                if (meme_list.SelectedIndex != -1)
-                    meme_img.Source = ByteToImage(Convert.FromBase64String(temp_memes[meme_list.SelectedIndex].Img));
-        }
-
         private void meme_del_Click(object sender, RoutedEventArgs e)
         {
             if (meme_list.SelectedIndex != -1 && meme_list.Items.Count == memes.Count)
@@ -189,6 +191,7 @@ namespace meme_catalog
             }
         }
         
+
         private void meme_categories_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (meme_categories.SelectedIndex != -1)
@@ -214,31 +217,19 @@ namespace meme_catalog
             }
         }
 
-        private void meme_url_down_Click(object sender, RoutedEventArgs e)
+        private void meme_list_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Add_url_meme add_url_mem_wnd = new Add_url_meme();
-
-            if (add_url_mem_wnd.ShowDialog() == true)
+            if ((meme_categories.SelectedIndex == -1 || meme_categories.SelectedIndex == 0) && (meme_find.Text.Length == 0 && meme_find_by_tag.Text.Length == 0))
             {
-                WebClient client = new WebClient();
-
-                string imageUrl = add_url_mem_wnd.url.Text;
-
-                byte[] imageArray = client.DownloadData(imageUrl);
-
-                string base64ImageRepresentation = Convert.ToBase64String(imageArray);
-
-                Mem mem = new Mem(add_url_mem_wnd.name.Text, base64ImageRepresentation, add_url_mem_wnd.tag.Text);
-
-                // добавление мема в каталог и ListBox
-                memes.Add(mem);
-                meme_list.Items.Add(mem.Name);
-
-                // добавление категорий в ComboBox
-                if (!(meme_categories.Items.Contains(mem.Category)))
-                    meme_categories.Items.Add(mem.Category);
+                if (meme_list.SelectedIndex != -1)
+                    meme_img.Source = ByteToImage(Convert.FromBase64String(memes[meme_list.SelectedIndex].Img));
             }
+            else
+                if (meme_list.SelectedIndex != -1)
+                    meme_img.Source = ByteToImage(Convert.FromBase64String(temp_memes[meme_list.SelectedIndex].Img));
         }
+
+
 
         private void find_mem_by_tag_Click(object sender, RoutedEventArgs e)
         {
